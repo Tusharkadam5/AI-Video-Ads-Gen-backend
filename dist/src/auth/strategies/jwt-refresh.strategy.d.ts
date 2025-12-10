@@ -1,0 +1,26 @@
+import { Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
+import { Request } from 'express';
+import { UsersService } from '../../users/users.service';
+declare const JwtRefreshStrategy_base: new (...args: [opt: import("passport-jwt").StrategyOptionsWithRequest] | [opt: import("passport-jwt").StrategyOptionsWithoutRequest]) => Strategy & {
+    validate(...args: any[]): unknown;
+};
+export declare class JwtRefreshStrategy extends JwtRefreshStrategy_base {
+    private configService;
+    private usersService;
+    constructor(configService: ConfigService, usersService: UsersService);
+    validate(req: Request, payload: any): Promise<{
+        refreshToken: any;
+        id: string;
+        email: string | null;
+        passwordHash: string | null;
+        fullName: string | null;
+        profileImage: string | null;
+        isEmailVerified: boolean;
+        isActive: boolean;
+        lastLoginAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+}
+export {};
