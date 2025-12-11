@@ -52,8 +52,10 @@ let AdsService = class AdsService {
             targetAudience: request.targetAudience,
             language: request.language,
         });
-        const script = await this.prisma.generatedScript.create({
-            data: {
+        const script = await this.prisma.generatedScript.upsert({
+            where: { adRequestId: id },
+            update: { content: scriptContent },
+            create: {
                 adRequestId: id,
                 content: scriptContent,
             },
