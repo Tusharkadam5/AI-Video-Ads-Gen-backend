@@ -16,6 +16,7 @@ async function bootstrap() {
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
+        exposedHeaders: ['Set-Cookie'],
     });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('AI Video Ads Generator API')
