@@ -28,6 +28,7 @@ export declare class AdsService {
             updatedAt: Date;
             description: string;
             images: string[];
+            logo: string | null;
             link: string | null;
             userId: string;
         };

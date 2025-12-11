@@ -46,6 +46,7 @@ export declare class AdsController {
             updatedAt: Date;
             description: string;
             images: string[];
+            logo: string | null;
             link: string | null;
             userId: string;
         };

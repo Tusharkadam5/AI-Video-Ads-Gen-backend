@@ -10,6 +10,7 @@ export declare class ProductsController {
         updatedAt: Date;
         description: string;
         images: string[];
+        logo: string | null;
         link: string | null;
         userId: string;
     }>;
@@ -20,6 +21,7 @@ export declare class ProductsController {
         updatedAt: Date;
         description: string;
         images: string[];
+        logo: string | null;
         link: string | null;
         userId: string;
     }[]>;
@@ -30,6 +32,7 @@ export declare class ProductsController {
         updatedAt: Date;
         description: string;
         images: string[];
+        logo: string | null;
         link: string | null;
         userId: string;
     } | null>;

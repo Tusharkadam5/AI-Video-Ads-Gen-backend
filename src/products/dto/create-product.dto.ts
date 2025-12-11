@@ -15,11 +15,16 @@ export class CreateProductDto {
     @ApiProperty({ type: [String] })
     @IsArray()
     @IsString({ each: true })
-    @IsUrl({}, { each: true })
+    @IsUrl({ require_tld: false }, { each: true })
     images: string[];
 
     @ApiProperty({ required: false })
     @IsOptional()
-    @IsUrl()
+    @IsUrl({ require_tld: false })
+    logo?: string;
+
+    @ApiProperty({ required: false })
+    @IsOptional()
+    @IsUrl({ require_tld: false })
     link?: string;
 }

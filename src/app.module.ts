@@ -13,6 +13,8 @@ import { VideoJobsModule } from './video-jobs/video-jobs.module';
 import { StorageModule } from './storage/storage.module';
 import { HealthModule } from './health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { UploadModule } from './upload/upload.module';
+
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { PrismaModule } from './prisma/prisma.module';
     AvatarsModule,
     VideoJobsModule,
     StorageModule,
+    UploadModule,
     HealthModule,
   ],
   controllers: [AppController],

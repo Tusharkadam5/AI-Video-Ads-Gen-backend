@@ -22,6 +22,7 @@ const video_jobs_module_1 = require("./video-jobs/video-jobs.module");
 const storage_module_1 = require("./storage/storage.module");
 const health_module_1 = require("./health/health.module");
 const prisma_module_1 = require("./prisma/prisma.module");
+const upload_module_1 = require("./upload/upload.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -50,6 +51,7 @@ exports.AppModule = AppModule = __decorate([
             avatars_module_1.AvatarsModule,
             video_jobs_module_1.VideoJobsModule,
             storage_module_1.StorageModule,
+            upload_module_1.UploadModule,
             health_module_1.HealthModule,
         ],
         controllers: [app_controller_1.AppController],
