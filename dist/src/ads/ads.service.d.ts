@@ -15,7 +15,6 @@ export declare class AdsService {
         platform: import("@prisma/client").$Enums.Platform;
         aspectRatio: import("@prisma/client").$Enums.AspectRatio;
         language: import("@prisma/client").$Enums.Language;
-        targetAudience: string;
         duration: import("@prisma/client").$Enums.AdDuration;
         status: import("@prisma/client").$Enums.JobStatus;
         productId: string;
@@ -47,6 +46,12 @@ export declare class AdsService {
             resultUrl: string | null;
             adRequestId: string;
         } | null;
+        targetAudiences: {
+            id: string;
+            createdAt: Date;
+            adRequestId: string;
+            segment: string;
+        }[];
     } & {
         id: string;
         createdAt: Date;
@@ -55,7 +60,6 @@ export declare class AdsService {
         platform: import("@prisma/client").$Enums.Platform;
         aspectRatio: import("@prisma/client").$Enums.AspectRatio;
         language: import("@prisma/client").$Enums.Language;
-        targetAudience: string;
         duration: import("@prisma/client").$Enums.AdDuration;
         status: import("@prisma/client").$Enums.JobStatus;
         productId: string;
@@ -66,6 +70,7 @@ export declare class AdsService {
         adRequestId: string;
         content: import("@prisma/client/runtime/client").JsonValue;
     }>;
+    getSuggestions(): Promise<string[]>;
     generateVideo(id: string): Promise<{
         id: string;
         createdAt: Date;

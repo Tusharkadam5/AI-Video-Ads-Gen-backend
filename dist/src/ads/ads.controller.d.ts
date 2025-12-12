@@ -11,7 +11,6 @@ export declare class AdsController {
         platform: import("@prisma/client").$Enums.Platform;
         aspectRatio: import("@prisma/client").$Enums.AspectRatio;
         language: import("@prisma/client").$Enums.Language;
-        targetAudience: string;
         duration: import("@prisma/client").$Enums.AdDuration;
         status: import("@prisma/client").$Enums.JobStatus;
         productId: string;
@@ -38,6 +37,7 @@ export declare class AdsController {
         message: string;
         status: string;
     }>;
+    getSuggestions(): Promise<string[]>;
     getStatus(id: string): Promise<{
         product: {
             name: string;
@@ -65,6 +65,12 @@ export declare class AdsController {
             resultUrl: string | null;
             adRequestId: string;
         } | null;
+        targetAudiences: {
+            id: string;
+            createdAt: Date;
+            adRequestId: string;
+            segment: string;
+        }[];
     } & {
         id: string;
         createdAt: Date;
@@ -73,7 +79,6 @@ export declare class AdsController {
         platform: import("@prisma/client").$Enums.Platform;
         aspectRatio: import("@prisma/client").$Enums.AspectRatio;
         language: import("@prisma/client").$Enums.Language;
-        targetAudience: string;
         duration: import("@prisma/client").$Enums.AdDuration;
         status: import("@prisma/client").$Enums.JobStatus;
         productId: string;

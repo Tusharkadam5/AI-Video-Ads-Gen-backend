@@ -36,6 +36,9 @@ let AdsController = class AdsController {
     generateVideo(id) {
         return this.adsService.generateVideo(id);
     }
+    getSuggestions() {
+        return this.adsService.getSuggestions();
+    }
     getStatus(id) {
         return this.adsService.getRequest(id);
     }
@@ -76,6 +79,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AdsController.prototype, "generateVideo", null);
+__decorate([
+    (0, common_1.Get)('audiences/suggestions'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AdsController.prototype, "getSuggestions", null);
 __decorate([
     (0, common_1.Get)(':id/status'),
     (0, swagger_1.ApiOperation)({ summary: 'Get Ad Request Status' }),

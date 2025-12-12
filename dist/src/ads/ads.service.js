@@ -24,17 +24,21 @@ let AdsService = class AdsService {
         this.videoJobs = videoJobs;
     }
     async createRequest(userId, dto) {
+        const { targetAudiences, ...rest } = dto;
         return this.prisma.adRequest.create({
             data: {
                 userId,
-                ...dto,
+                ...rest,
+                targetAudiences: {
+                    create: targetAudiences.map((segment) => ({ segment })),
+                },
             },
         });
     }
     async getRequest(id) {
         const request = await this.prisma.adRequest.findUnique({
             where: { id },
-            include: { generatedScript: true, videoJob: true, product: true },
+            include: { generatedScript: true, videoJob: true, product: true, targetAudiences: true },
         });
         if (!request)
             throw new common_1.NotFoundException('Ad Request not found');
@@ -44,12 +48,13 @@ let AdsService = class AdsService {
         const request = await this.getRequest(id);
         if (!request.product)
             throw new common_1.BadRequestException('Product data missing');
+        const targetAudienceString = request.targetAudiences.map(ta => ta.segment).join(', ');
         const scriptContent = await this.scriptGen.generateScript({
             productName: request.product.name,
             productDescription: request.product.description,
             platform: request.platform,
             duration: request.duration,
-            targetAudience: request.targetAudience,
+            targetAudience: targetAudienceString,
             language: request.language,
         });
         const script = await this.prisma.generatedScript.create({
@@ -59,6 +64,21 @@ let AdsService = class AdsService {
             },
         });
         return script;
+    }
+    async getSuggestions() {
+        const groups = await this.prisma.targetAudience.groupBy({
+            by: ['segment'],
+            _count: {
+                segment: true,
+            },
+            orderBy: {
+                _count: {
+                    segment: 'desc',
+                },
+            },
+            take: 10,
+        });
+        return groups.map(g => g.segment);
     }
     async generateVideo(id) {
         const request = await this.getRequest(id);

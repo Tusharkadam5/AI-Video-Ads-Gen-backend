@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEnum, IsUUID } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, IsUUID, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Platform, AspectRatio, Language, AdDuration } from '@prisma/client';
 
@@ -20,9 +20,10 @@ export class CreateAdRequestDto {
     language: Language;
 
     @ApiProperty()
-    @IsString()
+    @IsArray()
+    @IsString({ each: true })
     @IsNotEmpty()
-    targetAudience: string;
+    targetAudiences: string[];
 
     @ApiProperty({ enum: AdDuration })
     @IsEnum(AdDuration)

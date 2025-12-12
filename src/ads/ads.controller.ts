@@ -37,6 +37,11 @@ export class AdsController {
         return this.adsService.generateVideo(id);
     }
 
+    @Get('audiences/suggestions')
+    getSuggestions() {
+        return this.adsService.getSuggestions();
+    }
+
     @Get(':id/status')
     @ApiOperation({ summary: 'Get Ad Request Status' })
     getStatus(@Param('id') id: string) {

@@ -75,6 +75,11 @@ enum Platform {
   YOUTUBE
   INSTAGRAM
   FACEBOOK
+  GENERAL
+  TIKTOK
+  LINKEDIN
+  SNAPCHAT
+  TWITTER
 }
 
 enum AspectRatio {
@@ -85,6 +90,7 @@ enum AspectRatio {
 
 enum Language {
   ENGLISH
+  HINDI
   SPANISH
   FRENCH
   GERMAN
@@ -111,16 +117,25 @@ model AdRequest {
   platform       Platform
   aspectRatio    AspectRatio
   language       Language
-  targetAudience String
   duration       AdDuration
-  status         JobStatus   @default(PENDING)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  status         JobStatus        @default(PENDING)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 
   user            User             @relation(fields: [userId], references: [id])
   product         Product          @relation(fields: [productId], references: [id])
+  targetAudiences TargetAudience[]
   generatedScript GeneratedScript?
   videoJob        VideoJob?
+}
+
+model TargetAudience {
+  id          String    @id @default(uuid())
+  adRequestId String
+  segment     String
+  createdAt   DateTime  @default(now())
+
+  adRequest   AdRequest @relation(fields: [adRequestId], references: [id])
 }
 
 model GeneratedScript {

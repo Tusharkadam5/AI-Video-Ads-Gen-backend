@@ -4,6 +4,6 @@ export declare class CreateAdRequestDto {
     platform: Platform;
     aspectRatio: AspectRatio;
     language: Language;
-    targetAudience: string;
+    targetAudiences: string[];
     duration: AdDuration;
 }

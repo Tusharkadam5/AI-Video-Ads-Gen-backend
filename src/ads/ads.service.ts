@@ -13,10 +13,14 @@ export class AdsService {
     ) { }
 
     async createRequest(userId: string, dto: CreateAdRequestDto) {
+        const { targetAudiences, ...rest } = dto;
         return this.prisma.adRequest.create({
             data: {
                 userId,
-                ...dto,
+                ...rest,
+                targetAudiences: {
+                    create: targetAudiences.map((segment) => ({ segment })),
+                },
             },
         });
     }
@@ -24,7 +28,7 @@ export class AdsService {
     async getRequest(id: string) {
         const request = await this.prisma.adRequest.findUnique({
             where: { id },
-            include: { generatedScript: true, videoJob: true, product: true },
+            include: { generatedScript: true, videoJob: true, product: true, targetAudiences: true },
         });
         if (!request) throw new NotFoundException('Ad Request not found');
         return request;
@@ -34,12 +38,15 @@ export class AdsService {
         const request = await this.getRequest(id);
         if (!request.product) throw new BadRequestException('Product data missing');
 
+        // Join target audiences into a single string for the prompt
+        const targetAudienceString = request.targetAudiences.map(ta => ta.segment).join(', ');
+
         const scriptContent = await this.scriptGen.generateScript({
             productName: request.product.name,
             productDescription: request.product.description,
             platform: request.platform,
             duration: request.duration,
-            targetAudience: request.targetAudience,
+            targetAudience: targetAudienceString,
             language: request.language,
         });
 
@@ -51,6 +58,23 @@ export class AdsService {
         });
 
         return script;
+    }
+
+    async getSuggestions() {
+        const groups = await this.prisma.targetAudience.groupBy({
+            by: ['segment'],
+            _count: {
+                segment: true,
+            },
+            orderBy: {
+                _count: {
+                    segment: 'desc',
+                },
+            },
+            take: 10,
+        });
+
+        return groups.map(g => g.segment);
     }
 
     async generateVideo(id: string) {

@@ -18,7 +18,7 @@ class CreateAdRequestDto {
     platform;
     aspectRatio;
     language;
-    targetAudience;
+    targetAudiences;
     duration;
 }
 exports.CreateAdRequestDto = CreateAdRequestDto;
@@ -44,10 +44,11 @@ __decorate([
 ], CreateAdRequestDto.prototype, "language", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.IsString)({ each: true }),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateAdRequestDto.prototype, "targetAudience", void 0);
+    __metadata("design:type", Array)
+], CreateAdRequestDto.prototype, "targetAudiences", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ enum: client_1.AdDuration }),
     (0, class_validator_1.IsEnum)(client_1.AdDuration),
